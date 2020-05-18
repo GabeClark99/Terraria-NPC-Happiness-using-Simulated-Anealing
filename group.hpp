@@ -29,12 +29,16 @@ class Group
 		void MakeListFromFile(string filename);
 		
 		void AddNpc(NPC newNpc);
+		void AddNpc(NPC npc, int position);
 		void RemoveLastNpc();
+		void RemoveNPC(int position);
 		NPC* Find(string npcName);
 		
 		vector<NPC> GetNpcList();
 		int GetScore();
 		void SetBiome(string biome);
+		int GetNumberOfNpcs();
+		NPC GetNpc(int position);
 };
 
 #endif

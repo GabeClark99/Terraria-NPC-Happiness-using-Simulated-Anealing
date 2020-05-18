@@ -93,7 +93,17 @@ void Group::AddNpc(NPC newNpc)
 	this->npcList.push_back(newNpc);
 }
 
+void Group::AddNpc(NPC npc, int position)
+{
+	this->npcList.insert(this->npcList.begin() + position, npc);
+}
+
 void Group::RemoveLastNpc() { this->npcList.pop_back(); }
+
+void Group::RemoveNPC(int position)
+{
+	this->npcList.erase(this->npcList.begin() + position);
+}
 
 // Goes through each line of file, pulling in relevent data to create npc instance, minus
 // the neighbor preferences because it needs the npc variables for that before I set them.
@@ -303,5 +313,12 @@ int Group::GetScore()
 }
 
 void Group::SetBiome(string biome) { this->biome = biome; }
+
+int Group::GetNumberOfNpcs() { return this->npcList.size(); }
+
+NPC Group::GetNpc(int position) { return this->npcList.at(position); }
+
+
+
 
 

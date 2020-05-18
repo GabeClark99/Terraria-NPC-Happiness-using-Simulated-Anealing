@@ -19,9 +19,13 @@ void Initialize(vector<Group>* groupsVec, vector<NPC>* homelessNpcs);
 
 void Randomize(vector<Group>* groupsVec, vector<NPC>* homelessNpcs);
 
+void Shuffle(vector<Group>* groupsVec);
+
 void DisplayVersion(vector<Group> currentVersion);
 
 void DisplayHomelessNpcs(vector<NPC> homelessNpcs);
+
+int CalculateTotalScore(vector<Group> groupVec);
 
 int main() 
 {
@@ -35,15 +39,17 @@ int main()
 	
 	Initialize(&groupsVec, &homelessNpcs);
 	
-	cout << "Initialization: "; DisplayVersion(groupsVec); cout << endl << endl;
+	//cout << "Initialization: "; DisplayVersion(groupsVec); cout << endl << endl;
 	
-	cout << "Homeless NPCs: "; DisplayHomelessNpcs(homelessNpcs); cout << endl << endl;
+	//cout << "Homeless NPCs: "; DisplayHomelessNpcs(homelessNpcs); cout << endl << endl;
 	
 	Randomize(&groupsVec, &homelessNpcs);
 	
 	cout << "Randomization: "; DisplayVersion(groupsVec); cout << endl << endl;
 	
-	cout << "Homeless NPCs: "; DisplayHomelessNpcs(homelessNpcs); cout << endl << endl;
+	//cout << "Homeless NPCs: "; DisplayHomelessNpcs(homelessNpcs); cout << endl << endl;
+	
+	Shuffle(&groupsVec);
 	
 	return 0;
 }
@@ -86,6 +92,58 @@ void Randomize(vector<Group>* groupsVec, vector<NPC>* homelessNpcs)
 	}
 }
 
+void Shuffle(vector<Group>* groupsVec)
+{
+	int moves = 26;
+	
+	vector<Group>* tempVec = new vector<Group>;
+	*tempVec = *groupsVec;
+	
+	for(int i = 0; i < moves; ++i)
+	{
+		int randomGroup1 = rand() % 7;
+		// keep going until you find a group with more than one npc to steal from
+		while(groupsVec->at(randomGroup1).GetNumberOfNpcs() <= 1)
+		{
+			randomGroup1 = rand() % 7;
+		}
+		
+		int randomPosition1 = rand() % groupsVec->at(randomGroup1).GetNumberOfNpcs();
+		
+		int randomGroup2 = rand() % 7;
+		
+		// store it
+		NPC npc = groupsVec->at(randomGroup1).GetNpc(randomPosition1);
+		
+		// place it
+		groupsVec->at(randomGroup2).AddNpc(npc);
+		
+		// remove it
+		groupsVec->at(randomGroup1).RemoveNPC(randomPosition1);	
+	}
+	
+	cout << "new groupsVec: "; DisplayVersion(*groupsVec); cout << endl;
+	
+	
+	int oldScore = CalculateTotalScore(*groupsVec);
+	int newScore = CalculateTotalScore(*tempVec);
+	
+	cout << "old score: " << oldScore << ", new score: " << newScore << endl;
+	
+	if(newScore > oldScore)
+	{
+		cout << "new score is better, setting to main" << endl;
+		*groupsVec = *tempVec;
+	}
+	else
+	{
+		cout << "old score is better, discarding new version" << endl;
+	}
+	
+	delete tempVec;
+	return;
+}
+
 void DisplayVersion(vector<Group> currentVersion)
 {
 	for(int i = 0; i < currentVersion.size(); ++i)
@@ -121,5 +179,19 @@ void DisplayHomelessNpcs(vector<NPC> homelessNpcs)
 		}
 	}
 }
+
+int CalculateTotalScore(vector<Group> groupVec)
+{
+	int totalScore = 0;
+	
+	for(int i = 0; i < groupVec.size(); ++i)
+	{
+		totalScore += groupVec.at(i).GetScore();
+	}
+	
+	return totalScore;
+}
+
+
 
 
