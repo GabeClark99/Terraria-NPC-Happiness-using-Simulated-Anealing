@@ -1,0 +1,6 @@
+Name	Biome Preference		Neighbor Preference			
+	Likes	Dislikes	Loves	Likes	Dislikes	Hates
+A	-	-	N	-	-	D
+N	-	-	A	-	-	Z
+Z	-	-	-	-	-	A
+D	-	-	-	-	A	-

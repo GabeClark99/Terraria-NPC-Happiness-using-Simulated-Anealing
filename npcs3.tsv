@@ -1,0 +1,10 @@
+Name	Biome Preference		Neighbor Preference			
+	Likes	Dislikes	Loves	Likes	Dislikes	Hates
+Angler	Ocean	Desert	-	Demolitionist,Party Girl,Tax Collector	-	Santa Claus
+Arms Dealer	Desert	Snow	Nurse	Steampunker	Golfer	Demolitionist
+Clothier	Underground	Hallow	Truffle	Tax Collector	Nurse	Mechanic
+Cyborg	Snow	Jungle	-	Steampunker,Pirate,Stylist	Zoologist	Wizard
+Demolitionist	Underground	Ocean	Tavernkeep	Mechanic	Arms Dealer,Goblin Tinkerer	-
+Dryad	Jungle	Desert	-	Witch Doctor,Truffle	Angler	Golfer
+Dye Trader	Desert	Forest	-	Arms Dealer,Painter	Steampunker	Pirate
+Goblin Tinkerer	Underground	Jungle	Mechanic	Dye Trader	Clothier	Stylist
