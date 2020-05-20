@@ -1,6 +1,6 @@
 Name	Biome Preference		Neighbor Preference			
 	Likes	Dislikes	Loves	Likes	Dislikes	Hates
-A	-	-	N	-	-	D
-N	-	-	A	-	-	Z
-Z	-	-	-	-	-	A
-D	-	-	-	-	A	-
+A	Desert	Snow	N	-	-	D
+N	Hallow	Snow	A	-	-	Z
+Z	Forest	Desert	-	-	-	A
+D	Underground	Ocean	-	-	A	-

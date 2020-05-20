@@ -23,8 +23,8 @@ class NPC
 		string npcDislikesNames;
 		string npcHatesNames;
 		
-		string biomeLike;
-		string biomeDislike;
+		//string biomeLike;
+		//string biomeDislike;
 		
 		bool Find(NPC npc, vector<NPC> npcVec);
 	
@@ -62,6 +62,9 @@ class NPC
 		
 		bool DoesBiomeLike(string biome);
 		bool DoesBiomeDislike(string biome);
+		
+		string biomeLike;
+		string biomeDislike;
 };
 
 #endif

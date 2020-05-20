@@ -23,69 +23,81 @@ Group::Group(vector<NPC> npcVec)
 	this->npcList = npcVec;
 }
 
+
+
 void Group::CalculateNewScore()
 {	
 	this->score = 0;
 	
+//cout << "\t\tCalculating New Score for " << this->biome << endl;
+//cout << "\t\tNumber of NPCs: " << this->GetNumberOfNpcs() << endl;
+	
 	for(int i = 0; i < npcList.size(); ++i) // for each npc...
 	{
+//cout << "\t\t\tnpc: " << npcList.at(i).GetName() << endl;
 		// biome preferences section
+//cout << "\t\t\tBiome Preferences..." << endl;
 		if(npcList.at(i).DoesBiomeLike(this->biome))
 		{
+//cout << "\t\t\t\tlikes, +1" << endl;
 			score += likesScore;
 		}
 		if(npcList.at(i).DoesBiomeDislike(this->biome))
 		{
+//cout << "\t\t\t\tdislikes, -1" << endl;
 			score += dislikesScore;
 		}
 		
 		// neighbors preferences section
+//cout << "\t\t\tNeighbor Preferences..." << endl;
 		for(int j = i + 1; j < npcList.size(); ++j) // for every other npc...
 		{
 			if( npcList.at(i).DoesLove( npcList.at(j) ) ) // if i loves j...
 			{
-//cout << "\t\tloves, +2" << endl;
+//cout << "\t\t\t\tloves, +2" << endl;
 				score += lovesScore; 
 			}
 			if( npcList.at(i).DoesLike( npcList.at(j) ) ) // if i likes j...
 			{
-//cout << "\t\tlikes, +1" << endl;
+//cout << "\t\t\t\tlikes, +1" << endl;
 				score += likesScore; 
 			}
 			if( npcList.at(i).DoesDislike( npcList.at(j) ) ) // if i dislikes j...
 			{
-//cout << "\t\tdislikes, -1" << endl;
+//cout << "\t\t\t\tdislikes, -1" << endl;
 				score += dislikesScore;
 			}
 			if( npcList.at(i).DoesHate( npcList.at(j) ) ) // if i hates j...
 			{
-//cout << "\t\thates, -2" << endl;
+//cout << "\t\t\t\thates, -2" << endl;
 				score += hatesScore;
 			}
 			
 			
 			if( npcList.at(j).DoesLove( npcList.at(i) ) ) // if j loves i...
 			{
-//cout << "\t\tloves, +2" << endl;
+//cout << "\t\t\tloves, +2" << endl;
 				score += lovesScore;
 			}
 			if( npcList.at(j).DoesLike( npcList.at(i) ) ) // if j likes i...
 			{
-//cout << "\t\tlikes, +1" << endl;
+//cout << "\t\t\tlikes, +1" << endl;
 				score += likesScore;
 			}
 			if( npcList.at(j).DoesDislike( npcList.at(i) ) ) // if j dislikes i...
 			{
-//cout << "\t\tdislikes, -1" << endl;
+//cout << "\t\t\tdislikes, -1" << endl;
 				score += dislikesScore;
 			}
 			if( npcList.at(j).DoesHate( npcList.at(i) ) ) // if j hates i...
 			{
-//cout << "\t\thates, -2" << endl;
+//cout << "\t\t\thates, -2" << endl;
 				score += hatesScore;
 			}
 		}
 	}
+	
+	return;
 }
 
 void Group::AddNpc(NPC newNpc) 
@@ -103,6 +115,16 @@ void Group::RemoveLastNpc() { this->npcList.pop_back(); }
 void Group::RemoveNPC(int position)
 {
 	this->npcList.erase(this->npcList.begin() + position);
+}
+
+void Group::RemoveAllNpcs()
+{
+	while(this->npcList.size() > 0)
+	{
+		this->RemoveLastNpc();
+	}
+	
+	return;
 }
 
 // Goes through each line of file, pulling in relevent data to create npc instance, minus
@@ -137,7 +159,8 @@ void Group::MakeListFromFile(string filename) // returns bool indicating the suc
 		{
 			tokens.push_back(token);
 		}
-		
+	
+// display contents of tokens vector	
 /*cout << "tokens: ";
 for(unsigned int i = 0; i < tokens.size(); ++i)
 {
@@ -162,11 +185,12 @@ cout << endl << endl;*/
 		this->AddNpc(*npc);
 	}
 	
-for(unsigned int i = 0; i < this->npcList.size(); ++i)
+// displays position in list and its corresponding npc
+/*for(unsigned int i = 0; i < this->npcList.size(); ++i)
 {
 	cout << i << " " << this->npcList.at(i).GetName() << endl;
 }
-cout << endl;
+cout << endl;*/
 	
 	for(unsigned int i = 0; i < this->npcList.size(); ++i)
 	{
@@ -313,6 +337,8 @@ int Group::GetScore()
 }
 
 void Group::SetBiome(string biome) { this->biome = biome; }
+
+string Group::GetBiome() { return this->biome; }
 
 int Group::GetNumberOfNpcs() { return this->npcList.size(); }
 
